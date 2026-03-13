@@ -7,26 +7,55 @@ import (
 	"strings"
 
 	"exemple.com/notes/note"
+	"exemple.com/notes/todo"
 )
+
+type saver interface {
+	Save() error
+}
+
+type outputtable interface {
+	saver 
+	Display()
+}
 
 func main() {
 	title, content := getNoteData()
+	todoText := getUserInput("Todo text: ")
 
-	userNote, err := note.New(title, content)
-
+	todo, err := todo.New(todoText)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	userNote.Display()
-
-	err = userNote.Save()
+	userNote, err := note.New(title, content)
 	if err != nil {
-		fmt.Println("Saving the note failed.")
+		fmt.Println(err)
 		return
 	}
+
+	err = outputData(todo) 
+	if err != nil {
+		return
+	}
+
+	outputData(userNote)
+}
+
+func outputData(data outputtable) error {
+	data.Display()
+	return saveData(data)
+}
+
+func saveData(data saver) error{
+	err := data.Save()
+	if err != nil {
+		fmt.Println("Saving the note failed.")
+		return err
+	}
 	fmt.Println("Saving the note sucessed.")
+	return nil
 }
 
 func getNoteData () (string, string) {
