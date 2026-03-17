@@ -1,4 +1,4 @@
-module exemple.com/rest-api
+module exemplo.com/rest-api
 
 go 1.26.1
 

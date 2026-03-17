@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"exemple.com/rest-api/models"
+	"exemplo.com/rest-api/models"
 	"github.com/gin-gonic/gin"
 )
 
