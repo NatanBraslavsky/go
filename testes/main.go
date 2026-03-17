@@ -6,7 +6,7 @@ func pares(numbers []int) []int {
 	numPares := []int{}
 	for _, v := range numbers {
 		if v % 2 == 0 {
-			numPares = append(numPares, v)
+		numPares = append(numPares, v)
 		}
 	}
 	return numPares

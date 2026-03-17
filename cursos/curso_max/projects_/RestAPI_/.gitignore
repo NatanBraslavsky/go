@@ -1,0 +1,44 @@
+# Binários gerados
+/bin/
+/build/
+/dist/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Go workspace
+*.test
+*.out
+*.cover
+coverage.out
+
+# Vendor (opcional - ignore se não versionar dependências)
+vendor/
+
+# Arquivos de ambiente
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+
+# IDEs e editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Go modules (geralmente NÃO ignorar)
+# go.mod
+# go.sum
+
+# Hot reload (ex: air)
+tmp/
+.air/
