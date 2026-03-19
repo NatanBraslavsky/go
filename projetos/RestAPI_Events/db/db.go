@@ -22,7 +22,7 @@ func InitDB() {
 	createTables()
 }
 
-func createTables () {
+func createTables() {
 
 	createUsersTable := `
 	CREATE TABLE IF NOT EXISTS users (
