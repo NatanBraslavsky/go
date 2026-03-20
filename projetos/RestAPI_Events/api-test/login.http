@@ -1,5 +1,5 @@
 POST http://localhost:8080/login
-contet-type: application/json
+content-type: application/json
 
 {
     "email": "natan@email.com",
