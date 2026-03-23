@@ -1,11 +1,14 @@
 package routes
 
-import "github.com/gin-gonic/gin"
+import (
+	"exemplo.com/api-cbpf/controller"
+	"github.com/gin-gonic/gin"
+)
 
 func RegisterRoutes(server *gin.Engine) {
-	server.GET("/ping", getPing)
-	server.GET("/users/:id", getUser)
-	server.GET("/search", getSearch)
+	server.GET("/ping", controller.GetPing)
+	server.GET("/users/:id", controller.GetUser)
+	server.GET("/search", controller.GetSearch)
 
-	server.POST("/users", createUser)
+	server.POST("/users", controller.CreateUser)
 }
