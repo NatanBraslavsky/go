@@ -49,3 +49,27 @@ func CreateUser(c *gin.Context) {
 
 	c.JSON(200, user)
 }
+
+func DeleteUser(c *gin.Context) {
+	id := c.Param("id")
+
+	objID, err := bson.ObjectIDFromHex(id)
+
+	if err != nil {
+		c.JSON(400, gin.H{"message": "Invalid ID"})
+		return
+	}
+
+	result, err := mongo.ApiProject.Collection("user").DeleteOne(c, bson.M{"_id": objID})
+	if err != nil {
+		c.JSON(500, gin.H{"message": "Error deleting user"})
+		return
+	}
+
+	if result.DeletedCount == 0 {
+		c.JSON(404, gin.H{"message": "User not found"})
+		return
+	}
+
+	c.JSON(200, gin.H{"message": "User deleted successfully"})
+}
