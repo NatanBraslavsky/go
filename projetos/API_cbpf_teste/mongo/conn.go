@@ -21,6 +21,3 @@ func InitDB() {
 
 	ApiProject = client.Database("natan-estudo")
 }
-
-
-
