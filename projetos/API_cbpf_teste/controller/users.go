@@ -7,6 +7,32 @@ import (
 	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
+func GetUsers(c *gin.Context) {
+	ctx := c.Request.Context()
+	var users []models.User 
+
+	cursor, err := mongo.ApiProject.Collection("user").Find(ctx, bson.M{})
+	if err != nil {
+		c.JSON(500, gin.H{"error": err.Error()})
+		return
+	}
+	defer cursor.Close(ctx)
+
+	for cursor.Next(ctx) {
+		var user models.User
+		
+		err := cursor.Decode(&user)
+
+		if err != nil {
+			c.JSON(500, gin.H{"error": err.Error()})
+			return
+		}
+
+		users = append(users, user)
+	}
+	c.JSON(200, users)
+}
+
 func GetUser(c *gin.Context) {
 	id := c.Param("id")
 
@@ -26,7 +52,7 @@ func GetUser(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, id)
+	c.JSON(200, user)
 }
 
 func CreateUser(c *gin.Context) {
@@ -99,7 +125,7 @@ func UpdateUser(c *gin.Context) {
 		c.JSON(500, gin.H{"message": "Error updating user"})
 		return
 	}
-	
+
 	if result.MatchedCount == 0 {
 		c.JSON(404, gin.H{"message": "User not found"})
 		return
