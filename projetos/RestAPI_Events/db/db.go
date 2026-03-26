@@ -2,18 +2,19 @@ package db
 
 import (
 	"database/sql"
+	"fmt"
 
-	_ "github.com/mattn/go-sqlite3"
+	_ "modernc.org/sqlite"
 )
 
 var DB *sql.DB
 
 func InitDB() {
 	var err error
-	DB, err = sql.Open("sqlite3", "api.db")
+	DB, err = sql.Open("sqlite", "api.db")
 
 	if err != nil {
-		panic("Could not connect to database.")
+		panic(fmt.Sprintf("Could not connect to database: %v", err))
 	}
 
 	DB.SetMaxOpenConns(10)
@@ -35,7 +36,7 @@ func createTables() {
 	_, err := DB.Exec(createUsersTable)
 
 	if err != nil {
-		panic("Could not create users table.")
+		panic(fmt.Sprintf("Could not create users table: %v", err))
 	}
 
 	createEventsTable := `
@@ -53,7 +54,7 @@ func createTables() {
 	_, err = DB.Exec(createEventsTable)
 
 	if err != nil {
-		panic("Could not create events table")
+		panic(fmt.Sprintf("Could not create events table: %v", err))
 	}
 
 	createRegistrationsTable := `
@@ -69,6 +70,6 @@ func createTables() {
 	_, err = DB.Exec(createRegistrationsTable)
 
 	if err != nil {
-		panic("Could not create a registrations table")
+		panic(fmt.Sprintf("Could not create registrations table: %v", err))
 	}
 }
