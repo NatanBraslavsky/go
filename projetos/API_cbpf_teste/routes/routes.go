@@ -1,8 +1,9 @@
 package routes
 
 import (
-	"exemplo.com/api-cbpf/controller"
 	"github.com/gin-gonic/gin"
+
+	"exemplo.com/api-cbpf/controller"
 )
 
 func RegisterRoutes(server *gin.Engine) {

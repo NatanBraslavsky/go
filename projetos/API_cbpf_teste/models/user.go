@@ -5,9 +5,8 @@ import (
 )
 
 type User struct {
-	ID    bson.ObjectID 	`json:"id,omitempty" bson:"_id,omitempty"`
-	Name  string             	`json:"name" binding:"required"`
-	Email string             	`json:"email" binding:"required"`
-	Password string          	`json:"password" binding:"required"`
+	ID       bson.ObjectID `bson:"_id,omitempty" json:"id,omitempty"`
+	Name     string        `binding:"required"   json:"name"`
+	Email    string        `binding:"required"   json:"email"`
+	Password string        `binding:"required"   json:"password"`
 }
-

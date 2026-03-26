@@ -1,14 +1,15 @@
 package mongo
 
 import (
-	"exemplo.com/api-cbpf/env"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
+
+	"exemplo.com/api-cbpf/env"
 )
 
 var (
 	ApiProject *mongo.Database
-	client          *mongo.Client
+	client     *mongo.Client
 )
 
 func InitDB() {
