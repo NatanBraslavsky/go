@@ -7,6 +7,7 @@ import (
 	"exemplo.com/api-cbpf/env"
 )
 
+//nolint:gochecknoglobals
 var (
 	ApiProject *mongo.Database
 	client     *mongo.Client

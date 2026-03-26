@@ -6,6 +6,7 @@ type EnvConfig struct {
 	MongoUrl string
 }
 
+//nolint:gochecknoglobals
 var C *EnvConfig
 
 func Load() {

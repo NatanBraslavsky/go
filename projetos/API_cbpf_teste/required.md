@@ -8,3 +8,10 @@
     •    name obrigatório
     •    email obrigatório
 ```
+
+1. Não pode criar duas contas com o mesmo email (crie um setup para que o email seja definido como index e unique
+2. Get users para pegar todos os usuarios 
+3. Na criação e edição verificar se é um email valido
+4. Instalar o air para não ter que ficar reiniciando o servidor
+5. Instalar o golint e lintar o projeto inteiro (copiar o lint yaml dos nossos projetos)
+6. Ao deletar, ter que digitar a senha para verificar se o usuario pode ser deletado

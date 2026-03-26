@@ -6,6 +6,7 @@ import (
 
 	"exemplo.com/api-cbpf/models"
 	"exemplo.com/api-cbpf/mongo"
+	"exemplo.com/api-cbpf/utils"
 )
 
 func GetUsers(c *gin.Context) {
@@ -72,7 +73,14 @@ func CreateUser(c *gin.Context) {
 
 	err := c.ShouldBindJSON(&user)
 	if err != nil {
-		c.JSON(400, gin.H{"message": "Could not parse request data."})
+		c.JSON(400, gin.H{"message": "Could not parse request data"})
+
+		return
+	}
+
+	// valida email
+	if !utils.IsValidEmail(user.Email) {
+		c.JSON(400, gin.H{"message": "Invalid email"})
 
 		return
 	}
@@ -130,6 +138,13 @@ func UpdateUser(c *gin.Context) {
 	err = c.ShouldBindJSON(&updatedUser)
 	if err != nil {
 		c.JSON(400, gin.H{"message": "Could not parse request data"})
+
+		return
+	}
+
+	// valida email
+	if !utils.IsValidEmail(updatedUser.Email) {
+		c.JSON(400, gin.H{"message": "Invalid email"})
 
 		return
 	}
