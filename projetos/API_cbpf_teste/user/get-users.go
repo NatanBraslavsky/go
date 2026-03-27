@@ -30,7 +30,8 @@ func GetAll(ctx context.Context) ([]models.User, error) {
 		users = append(users, currentUser)
 	}
 
-	if err = cursor.Err(); err != nil {
+	err = cursor.Err()
+	if err != nil {
 		return nil, err
 	}
 
