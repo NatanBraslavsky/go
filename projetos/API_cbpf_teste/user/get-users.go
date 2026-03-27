@@ -17,7 +17,12 @@ func GetAll(ctx context.Context) ([]models.User, error) {
 		return nil, err
 	}
 
-	defer cursor.Close(ctx)
+	defer func() {
+		err := cursor.Close(ctx)
+		if err != nil {
+			panic(err)
+		}
+	}()
 
 	for cursor.Next(ctx) {
 		var currentUser models.User
