@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/v2/bson"
 
-	"exemplo.com/api-cbpf/models"
+	"exemplo.com/api-cbpf/mongo"
 	"exemplo.com/api-cbpf/user"
 	"exemplo.com/api-cbpf/utils"
 )
@@ -19,7 +19,7 @@ func UpdateUser(c *gin.Context) {
 		return
 	}
 
-	var updatedUser models.User
+	var updatedUser mongo.User
 
 	err = c.ShouldBindJSON(&updatedUser)
 	if err != nil {

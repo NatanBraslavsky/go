@@ -13,6 +13,7 @@ func main() {
 	_ = godotenv.Load("./.env")
 	env.Load()
 	mongo.InitDB()
+	mongo.Setup()
 
 	server := gin.Default()
 	routes.RegisterRoutes(server)

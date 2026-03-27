@@ -5,12 +5,11 @@ import (
 
 	"go.mongodb.org/mongo-driver/v2/bson"
 
-	"exemplo.com/api-cbpf/models"
 	"exemplo.com/api-cbpf/mongo"
 )
 
-func GetAll(ctx context.Context) ([]models.User, error) {
-	var users []models.User
+func GetAll(ctx context.Context) ([]mongo.User, error) {
+	var users []mongo.User
 
 	cursor, err := mongo.ApiProject.Collection("user").Find(ctx, bson.M{})
 	if err != nil {
@@ -25,7 +24,7 @@ func GetAll(ctx context.Context) ([]models.User, error) {
 	}()
 
 	for cursor.Next(ctx) {
-		var currentUser models.User
+		var currentUser mongo.User
 
 		err = cursor.Decode(&currentUser)
 		if err != nil {

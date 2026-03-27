@@ -4,13 +4,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/v2/bson"
 
-	"exemplo.com/api-cbpf/models"
+	"exemplo.com/api-cbpf/mongo"
 	"exemplo.com/api-cbpf/user"
 	"exemplo.com/api-cbpf/utils"
 )
 
 func CreateUser(c *gin.Context) {
-	var newUser models.User
+	var newUser mongo.User
 
 	err := c.ShouldBindJSON(&newUser)
 	if err != nil {

@@ -5,11 +5,10 @@ import (
 
 	"go.mongodb.org/mongo-driver/v2/bson"
 
-	"exemplo.com/api-cbpf/models"
 	"exemplo.com/api-cbpf/mongo"
 )
 
-func UpdateByID(ctx context.Context, id bson.ObjectID, updatedUser models.User) error {
+func UpdateByID(ctx context.Context, id bson.ObjectID, updatedUser mongo.User) error {
 	result, err := mongo.ApiProject.Collection("user").UpdateOne(
 		ctx,
 		bson.M{"_id": id},
