@@ -2,19 +2,27 @@ package main
 
 import "fmt"
 
-func pares(numbers []int) []int {
-	numPares := []int{}
-	for _, v := range numbers {
-		if v % 2 == 0 {
-		numPares = append(numPares, v)
-		}
-	}
-	return numPares
+import "strings"
+
+func verificarPalindromo(txt string) bool {
+    arr := strings.Split(txt, "") // separa por caractere
+
+    inv := []string{}
+
+    for i := len(arr) - 1; i >= 0; i-- {
+        inv = append(inv, arr[i])
+    }
+
+    for i := 0; i < len(arr); i++ { // corrigido aqui
+        if arr[i] != inv[i] {
+            return false
+        }
+    }
+
+    return true
 }
 
 func main() {
-	numbers := []int{2,4,5,55,67,32}
-	numPares := pares(numbers)
-	fmt.Println(numPares)
+	fmt.Println(verificarPalindromo("atan"))
 }
 
