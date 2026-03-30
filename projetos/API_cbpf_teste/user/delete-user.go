@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"errors"
 
 	"go.mongodb.org/mongo-driver/v2/bson"
 
@@ -15,7 +16,7 @@ func DeleteByID(ctx context.Context, id bson.ObjectID) error {
 	}
 
 	if result.DeletedCount == 0 {
-		return ErrUserNotFound
+		return errors.New("user not find")
 	}
 
 	return nil

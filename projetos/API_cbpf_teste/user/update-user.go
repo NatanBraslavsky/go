@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"errors"
 
 	"go.mongodb.org/mongo-driver/v2/bson"
 
@@ -19,7 +20,7 @@ func UpdateByID(ctx context.Context, id bson.ObjectID, updatedUser mongo.User) e
 	}
 
 	if result.MatchedCount == 0 {
-		return ErrUserNotFound
+		return errors.New("user not found")
 	}
 
 	return nil

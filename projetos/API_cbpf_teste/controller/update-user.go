@@ -1,8 +1,6 @@
 package controller
 
 import (
-	"errors"
-
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/v2/bson"
 
@@ -36,12 +34,6 @@ func UpdateUser(c *gin.Context) {
 
 	err = user.UpdateByID(c.Request.Context(), objID, updatedUser)
 	if err != nil {
-		if errors.Is(err, user.ErrUserNotFound) {
-			c.JSON(404, gin.H{"message": "User not found"})
-
-			return
-		}
-
 		c.JSON(500, gin.H{"message": "Error updating user"})
 
 		return
