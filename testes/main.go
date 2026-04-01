@@ -22,6 +22,10 @@ func verificarPalindromo(txt string) bool {
     return true
 }
 
+func sum(a, b int) int {
+    return a + b
+}
+
 func main() {
 	fmt.Println(verificarPalindromo("atan"))
 }
