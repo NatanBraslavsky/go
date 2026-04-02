@@ -1,54 +1,60 @@
 package main
 
 import (
-	"fmt"
+	"log"
 
 	"resty.dev/v3"
 )
 
 type Product struct {
-	Name string                 `json:"name"`
-	Data map[string]interface{} `json:"data"`
+	Name string         `json:"name"`
+	Data map[string]any `json:"data"`
 }
 
 type Response struct {
-	ID        string                 `json:"id"`
-	Name      string                 `json:"name"`
-	Data      map[string]interface{} `json:"data"`
-	CreatedAt interface{}            `json:"createdAt"`
-	UpdatedAt interface{}            `json:"updatedAt"`
+	ID        string         `json:"id"`
+	Name      string         `json:"name"`
+	Data      map[string]any `json:"data"`
+	CreatedAt any            `json:"createdAt"`
+	UpdatedAt any            `json:"updatedAt"`
 }
 
 func main() {
 	client := resty.New()
-	defer client.Close()
+
+	defer func() {
+		err := client.Close()
+		if err != nil {
+			panic(err)
+		}
+	}()
 
 	// GET ALL
 	res, err := client.R().
 		Get("https://api.restful-api.dev/objects")
-
 	if err != nil {
-		fmt.Println("Erro GET ALL:", err)
+		log.Println("Erro GET ALL:", err)
+
 		return
 	}
 
-	fmt.Println("GET ALL Status:", res.Status())
+	log.Println("GET ALL Status:", res.Status())
 
 	// GET BY ID
 	res, err = client.R().
 		Get("https://api.restful-api.dev/objects/3")
-
 	if err != nil {
-		fmt.Println("Erro GET BY ID:", err)
+		log.Println("Erro GET BY ID:", err)
+
 		return
 	}
 
-	fmt.Println("GET BY ID Status:", res.Status())
+	log.Println("GET BY ID Status:", res.Status())
 
 	// POST
 	body := Product{
 		Name: "Apple MacBook",
-		Data: map[string]interface{}{
+		Data: map[string]any{
 			"year":           2019,
 			"price":          1849.99,
 			"CPU model":      "Intel Core i9",
@@ -60,24 +66,28 @@ func main() {
 		SetBody(body).
 		SetResult(&Response{}).
 		Post("https://api.restful-api.dev/objects")
-
 	if err != nil {
-		fmt.Println("Erro POST:", err)
+		log.Println("Erro POST:", err)
+
 		return
 	}
 
-	fmt.Println("POST Status:", res.Status())
+	log.Println("POST Status:", res.Status())
 
-	created := res.Result().(*Response)
-	fmt.Println("Criado:", created)
+	created, ok := res.Result().(*Response)
+	if !ok {
+		log.Println("Erro ao converter response")
+
+		return
+	}
 
 	id := created.ID
-	fmt.Println("ID criado:", id)
+	log.Println("ID criado:", id)
 
 	// PUT
 	body = Product{
 		Name: "Apple MacBook Pro 16",
-		Data: map[string]interface{}{
+		Data: map[string]any{
 			"year":           2019,
 			"price":          2049.99,
 			"CPU model":      "Intel Core i9",
@@ -86,25 +96,31 @@ func main() {
 		},
 	}
 
-	url := fmt.Sprintf("https://api.restful-api.dev/objects/%s", id)
+	url := "https://api.restful-api.dev/objects/" + id
 
 	res, err = client.R().
 		SetBody(body).
 		SetResult(&Response{}).
 		Put(url)
-
 	if err != nil {
-		fmt.Println("Erro PUT:", err)
+		log.Println("Erro PUT:", err)
+
 		return
 	}
 
-	fmt.Println("PUT Status:", res.Status())
+	log.Println("PUT Status:", res.Status())
 
-	updated := res.Result().(*Response)
-	fmt.Println("Atualizado (PUT):", updated)
+	updated, ok := res.Result().(*Response)
+	if !ok {
+		log.Println("Erro ao converter response (PUT)")
+
+		return
+	}
+
+	log.Println("Atualizado (PUT):", updated)
 
 	// PATCH
-	patchBody := map[string]interface{}{
+	patchBody := map[string]any{
 		"name": "Apple MacBook Pro 16 (PATCHED)",
 	}
 
@@ -112,26 +128,32 @@ func main() {
 		SetBody(patchBody).
 		SetResult(&Response{}).
 		Patch(url)
-
 	if err != nil {
-		fmt.Println("Erro PATCH:", err)
+		log.Println("Erro PATCH:", err)
+
 		return
 	}
 
-	fmt.Println("PATCH Status:", res.Status())
+	log.Println("PATCH Status:", res.Status())
 
-	patched := res.Result().(*Response)
-	fmt.Println("Atualizado (PATCH):", patched)
+	patched, ok := res.Result().(*Response)
+	if !ok {
+		log.Println("Erro ao converter response (PATCH)")
 
-	// DELETE 
+		return
+	}
+
+	log.Println("Atualizado (PATCH):", patched)
+
+	// DELETE
 	res, err = client.R().
 		Delete(url)
-
 	if err != nil {
-		fmt.Println("Erro DELETE:", err)
+		log.Println("Erro DELETE:", err)
+
 		return
 	}
 
-	fmt.Println("DELETE Status:", res.Status())
-	fmt.Println("DELETE Body:", res.String())
+	log.Println("DELETE Status:", res.Status())
+	log.Println("DELETE Body:", res.String())
 }
