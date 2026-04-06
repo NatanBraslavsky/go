@@ -10,6 +10,8 @@ import (
 )
 
 func Insert(ctx context.Context, newUser mongo.User) error {
+	newUser.ID = bson.NewObjectID()
+
 	count, err := mongo.ApiProject.Collection("user").CountDocuments(ctx, bson.M{"email": newUser.Email})
 	if err != nil {
 		return errors.New("erro genérico")

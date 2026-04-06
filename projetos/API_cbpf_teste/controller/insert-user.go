@@ -2,7 +2,6 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/v2/bson"
 
 	"exemplo.com/api-cbpf/mongo"
 	"exemplo.com/api-cbpf/user"
@@ -24,8 +23,6 @@ func CreateUser(c *gin.Context) {
 
 		return
 	}
-
-	newUser.ID = bson.NewObjectID()
 
 	err = user.Insert(c.Request.Context(), newUser)
 	if err != nil {
