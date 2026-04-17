@@ -2,31 +2,26 @@ package main
 
 import "fmt"
 
-import "strings"
+func main() {
+    var valor int
 
-func verificarPalindromo(txt string) bool {
-    arr := strings.Split(txt, "") // separa por caractere
+    notas := []int{100, 50, 20, 10, 5, 2, 1}
+    resultado := make(map[int]int)
 
-    inv := []string{}
+    fmt.Print("Digite o valor: ")
+    fmt.Scanf("%d", &valor)
 
-    for i := len(arr) - 1; i >= 0; i-- {
-        inv = append(inv, arr[i])
-    }
-
-    for i := 0; i < len(arr); i++ { // corrigido aqui
-        if arr[i] != inv[i] {
-            return false
+    for _, nota := range notas {
+        if valor >= nota {
+            qtd := valor / nota
+            resultado[nota] = qtd
+            valor = valor % nota
         }
     }
 
-    return true
+    for _, nota := range notas {
+        if resultado[nota] > 0 {
+            fmt.Printf("%d: %d\n", nota, resultado[nota])
+        }
+    }
 }
-
-func sum(a, b int) int {
-    return a + b
-}
-
-func main() {
-	fmt.Println(verificarPalindromo("atan"))
-}
-
