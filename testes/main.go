@@ -8,20 +8,20 @@ func main() {
     notas := []int{100, 50, 20, 10, 5, 2, 1}
     resultado := make(map[int]int)
 
-    fmt.Print("Digite o valor: ")
-    fmt.Scanf("%d", &valor)
+    fmt.Print("Digite um valor: ")
+    fmt.Scan(&valor)
 
     for _, nota := range notas {
         if valor >= nota {
-            qtd := valor / nota
-            resultado[nota] = qtd
+            quantidade := valor / nota
+            resultado[nota] = quantidade
             valor = valor % nota
         }
     }
 
     for _, nota := range notas {
         if resultado[nota] > 0 {
-            fmt.Printf("%d: %d\n", nota, resultado[nota])
+            fmt.Printf("%d nota(s) de R$ %d\n", resultado[nota], nota)
         }
     }
 }
